@@ -1,0 +1,9 @@
+{
+  "category.mozc_caps.title": "Gboard CAPS",
+  "key.mozc_caps.toggle_input": "Toggle input",
+  "hud.mozc_caps.left_click": "<%s> to type",
+  "hud.mozc_caps.middle_click": "<%s> to change layout",
+  "hud.mozc_caps.right_click": "<%s> to send",
+  "hud.mozc_caps.layout": "Layout: %s",
+  "item.mozc_caps.caps": "Gboard CAPS"
+}

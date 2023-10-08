@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "mozc_caps",
+  "version": "${version}",
+
+  "name": "gCAPS",
+  "description": "Gboard CAPS in Minecraft",
+  "authors": [
+    "LX86"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/gcaps",
+    "sources": "https://github.com/Kenny-Hui/gcaps-fabric",
+    "issues": "https://github.com/Kenny-Hui/gcaps-fabric/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/mozc_caps/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.lx862.mozccaps.Main"
+    ],
+    "client": [
+      "com.lx862.mozccaps.MainClient"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "minecraft": "~1.20"
+  }
+}
