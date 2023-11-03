@@ -44,25 +44,37 @@ public class MainClient implements ClientModInitializer {
 	}
 
 	private void handleMouseInput(MinecraftClient minecraft) {
-		while(toggleInput.wasPressed()) {
-			AtamaInput.inputEnabled = !AtamaInput.inputEnabled;
+		if(capEquipped()) {
+			while(toggleInput.wasPressed()) {
+				AtamaInput.inputEnabled = !AtamaInput.inputEnabled;
+			}
+
+			if(AtamaInput.inputEnabled) {
+				while(minecraft.options.attackKey.wasPressed()) {
+					AtamaInput.input(minecraft.player.getHeadYaw());
+					minecraft.player.swingHand(minecraft.player.getActiveHand());
+					sendTypedPacket(minecraft.player);
+				}
+
+				while(minecraft.options.pickItemKey.wasPressed()) {
+					AtamaInput.cycleLayout();
+				}
+
+				while(minecraft.options.useKey.wasPressed()) {
+					AtamaInput.sendMessage(minecraft);
+				}
+			}
 		}
+	}
 
-		if(AtamaInput.inputEnabled) {
-			while(minecraft.options.attackKey.wasPressed()) {
-				AtamaInput.input(minecraft.player.getHeadYaw());
-				minecraft.player.swingHand(minecraft.player.getActiveHand());
-				sendTypedPacket(minecraft.player);
-			}
+	public static boolean capEquipped() {
+		return capEquipped(false) || capEquipped(true);
+	}
 
-			while(minecraft.options.pickItemKey.wasPressed()) {
-				AtamaInput.cycleLayout();
-			}
-
-			while(minecraft.options.useKey.wasPressed()) {
-				AtamaInput.sendMessage(minecraft);
-			}
-		}
+	public static boolean capEquipped(boolean chinStrapped) {
+		MinecraftClient minecraft = MinecraftClient.getInstance();
+		if(minecraft.player == null) return false;
+		return minecraft.player.getInventory().getArmorStack(3).getItem() == (Main.CAPS);
 	}
 
 	private static void updateCapPressedAnimation(float delta) {

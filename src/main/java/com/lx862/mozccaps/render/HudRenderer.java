@@ -2,6 +2,7 @@ package com.lx862.mozccaps.render;
 
 import com.lx862.mozccaps.AtamaInput;
 import com.lx862.mozccaps.Main;
+import com.lx862.mozccaps.MainClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
@@ -12,10 +13,8 @@ public class HudRenderer {
     public static String selectedChar = "";
     public static void draw(DrawContext drawContext, float delta) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
-        if(minecraft.player == null) return;
 
-        boolean capEquipped = minecraft.player.getInventory().getArmorStack(3).getItem() == Main.CAPS;
-        if(capEquipped && AtamaInput.inputEnabled) {
+        if(MainClient.capEquipped() && AtamaInput.inputEnabled && minecraft.player != null) {
             selectedChar = AtamaInput.getSelection(minecraft.player.getHeadYaw());
             drawTextField(minecraft, drawContext, delta);
         }
