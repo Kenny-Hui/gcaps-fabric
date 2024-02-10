@@ -14,7 +14,7 @@ public class HudRenderer {
     public static void draw(DrawContext drawContext, float delta) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
 
-        if(MainClient.capEquipped() && AtamaInput.inputEnabled && minecraft.player != null) {
+        if(MainClient.capEquipped() && AtamaInput.inputEnabled() && minecraft.player != null) {
             selectedChar = AtamaInput.getSelection(minecraft.player.getHeadYaw());
             drawTextField(minecraft, drawContext, delta);
         }

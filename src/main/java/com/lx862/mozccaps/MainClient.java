@@ -6,17 +6,13 @@ import com.lx862.mozccaps.render.HudRenderer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroups;
-import net.minecraft.network.PacketByteBuf;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.HashMap;
@@ -25,12 +21,13 @@ import java.util.UUID;
 
 public class MainClient implements ClientModInitializer {
 	public static HashMap<UUID, Double> keyPressedList = new HashMap<>();
-	public static final KeyBinding toggleInput = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.mozc_caps.toggle_input", GLFW.GLFW_KEY_Y, "category.mozc_caps.title"));
+	public static final KeyBinding toggleInputKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.mozc_caps.toggle_input", GLFW.GLFW_KEY_Y, "category.mozc_caps.title"));
+
 	@Override
 	public void onInitializeClient() {
 		ArmorRenderer.register(new CapArmorRenderer(), Main.CAPS);
 		HudRenderCallback.EVENT.register(HudRenderer::draw);
-		ClientTickEvents.START_CLIENT_TICK.register(this::handleMouseInput);
+		ClientTickEvents.START_CLIENT_TICK.register(this::handleInput);
 		Networking.registerReceiverClient();
 
 		WorldRenderEvents.BEFORE_ENTITIES.register(context -> {
@@ -42,20 +39,20 @@ public class MainClient implements ClientModInitializer {
 		});
 	}
 
-	private void handleMouseInput(MinecraftClient minecraft) {
+	private void handleInput(MinecraftClient minecraft) {
 		if(minecraft.player == null) return;
 		if(!capEquipped()) return;
 
-		while(toggleInput.wasPressed()) {
-			AtamaInput.inputEnabled = !AtamaInput.inputEnabled;
+		while(toggleInputKey.wasPressed()) {
+			AtamaInput.toggleInput();
 		}
 
-		if(AtamaInput.inputEnabled) {
+		if(AtamaInput.inputEnabled()) {
 			// LMB
 			while(minecraft.options.attackKey.wasPressed()) {
 				AtamaInput.input(minecraft.player.getHeadYaw());
 				minecraft.player.swingHand(minecraft.player.getActiveHand());
-				sendTypedPacket(minecraft.player);
+				Networking.sendKeyPressedClient(minecraft.player);
 			}
 
 			// MMB
@@ -89,11 +86,5 @@ public class MainClient implements ClientModInitializer {
 				keyPressedList.put(entry.getKey(), newProgress);
 			}
 		}
-	}
-
-	private static void sendTypedPacket(PlayerEntity player) {
-		PacketByteBuf buf = PacketByteBufs.create();
-		buf.writeUuid(player.getUuid());
-		ClientPlayNetworking.send(Networking.PLAYER_TYPED, buf);
 	}
 }

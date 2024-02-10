@@ -17,14 +17,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class PlayerEntityMixin {
     @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
     public void isBlockBreakingRestricted(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
-        if(MainClient.capEquipped() && AtamaInput.inputEnabled) {
+        if(MainClient.capEquipped() && AtamaInput.inputEnabled()) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
     public void attack(Entity target, CallbackInfo ci) {
-        if(MainClient.capEquipped() && AtamaInput.inputEnabled) {
+        if(MainClient.capEquipped() && AtamaInput.inputEnabled()) {
             ci.cancel();
         }
     }

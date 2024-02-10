@@ -4,6 +4,7 @@ import com.lx862.mozccaps.MainClient;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -23,7 +24,7 @@ public class Networking {
         ServerPlayNetworking.registerGlobalReceiver(PLAYER_TYPED, (server, player, handler, buf, responseSender) -> {
             UUID playerUuid = buf.readUuid();
             server.execute(() -> {
-                // Rebroadcast typing request to all player
+                // Rebroadcast key pressed event to all player
                 server.getPlayerManager().getPlayerList().forEach(p -> {
                     PacketByteBuf buf2 = PacketByteBufs.create();
                     buf2.writeUuid(playerUuid);
@@ -31,5 +32,11 @@ public class Networking {
                 });
             });
         });
+    }
+
+    public static void sendKeyPressedClient(PlayerEntity player) {
+        PacketByteBuf buf = PacketByteBufs.create();
+        buf.writeUuid(player.getUuid());
+        ClientPlayNetworking.send(PLAYER_TYPED, buf);
     }
 }
