@@ -26,7 +26,6 @@ import java.util.UUID;
 public class MainClient implements ClientModInitializer {
 	public static HashMap<UUID, Double> keyPressedList = new HashMap<>();
 	public static final KeyBinding toggleInput = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.mozc_caps.toggle_input", GLFW.GLFW_KEY_Y, "category.mozc_caps.title"));
-
 	@Override
 	public void onInitializeClient() {
 		ArmorRenderer.register(new CapArmorRenderer(), Main.CAPS);
@@ -44,25 +43,29 @@ public class MainClient implements ClientModInitializer {
 	}
 
 	private void handleMouseInput(MinecraftClient minecraft) {
-		if(capEquipped()) {
-			while(toggleInput.wasPressed()) {
-				AtamaInput.inputEnabled = !AtamaInput.inputEnabled;
+		if(minecraft.player == null) return;
+		if(!capEquipped()) return;
+
+		while(toggleInput.wasPressed()) {
+			AtamaInput.inputEnabled = !AtamaInput.inputEnabled;
+		}
+
+		if(AtamaInput.inputEnabled) {
+			// LMB
+			while(minecraft.options.attackKey.wasPressed()) {
+				AtamaInput.input(minecraft.player.getHeadYaw());
+				minecraft.player.swingHand(minecraft.player.getActiveHand());
+				sendTypedPacket(minecraft.player);
 			}
 
-			if(AtamaInput.inputEnabled) {
-				while(minecraft.options.attackKey.wasPressed()) {
-					AtamaInput.input(minecraft.player.getHeadYaw());
-					minecraft.player.swingHand(minecraft.player.getActiveHand());
-					sendTypedPacket(minecraft.player);
-				}
+			// MMB
+			while(minecraft.options.pickItemKey.wasPressed()) {
+				AtamaInput.cycleLayout();
+			}
 
-				while(minecraft.options.pickItemKey.wasPressed()) {
-					AtamaInput.cycleLayout();
-				}
-
-				while(minecraft.options.useKey.wasPressed()) {
-					AtamaInput.sendMessage(minecraft);
-				}
+			// RMB
+			while(minecraft.options.useKey.wasPressed()) {
+				AtamaInput.sendMessage(minecraft);
 			}
 		}
 	}

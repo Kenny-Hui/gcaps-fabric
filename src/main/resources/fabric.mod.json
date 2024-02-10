@@ -27,6 +27,7 @@
     ]
   },
   "mixins": [
+    "mozccaps.mixins.json"
   ],
 
   "depends": {
