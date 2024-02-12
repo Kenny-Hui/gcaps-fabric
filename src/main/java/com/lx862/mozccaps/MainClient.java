@@ -52,19 +52,19 @@ public class MainClient implements ClientModInitializer {
 
 		if(AtamaInput.inputEnabled()) {
 			// LMB
-			while(minecraft.options.attackKey.isPressed()) {
+			while(minecraft.options.attackKey.wasPressed()) {
 				AtamaInput.input(minecraft.player.getHeadYaw());
 				minecraft.player.swingHand(minecraft.player.getActiveHand());
 				Networking.sendKeyPressedClient(minecraft.player);
 			}
 
 			// MMB
-			while(minecraft.options.pickItemKey.isPressed()) {
+			while(minecraft.options.pickItemKey.wasPressed()) {
 				AtamaInput.cycleLayout();
 			}
 
 			// RMB
-			while(minecraft.options.useKey.isPressed()) {
+			while(minecraft.options.useKey.wasPressed()) {
 				AtamaInput.sendMessage(minecraft);
 			}
 		}
