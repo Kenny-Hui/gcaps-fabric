@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import org.lwjgl.glfw.GLFW;
 
@@ -25,7 +26,9 @@ public class MainClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ArmorRenderer.register(new CapArmorRenderer(), Main.CAPS);
+		ArmorRenderer.register(new CapArmorRenderer(false), Main.CAPS);
+		ArmorRenderer.register(new CapArmorRenderer(true), Main.CAPS_STRAPPED);
+
 		HudRenderCallback.EVENT.register(HudRenderer::draw);
 		ClientTickEvents.START_CLIENT_TICK.register(this::handleInput);
 		Networking.registerReceiverClient();
@@ -36,6 +39,7 @@ public class MainClient implements ClientModInitializer {
 
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(content -> {
 			content.add(Main.CAPS);
+			content.add(Main.CAPS_STRAPPED);
 		});
 	}
 
@@ -74,7 +78,8 @@ public class MainClient implements ClientModInitializer {
 	public static boolean capEquipped(boolean chinStrapped) {
 		MinecraftClient minecraft = MinecraftClient.getInstance();
 		if(minecraft.player == null) return false;
-		return minecraft.player.getInventory().getArmorStack(3).getItem() == (Main.CAPS);
+		Item helmetItem = minecraft.player.getInventory().getArmorStack(3).getItem();
+		return chinStrapped ? helmetItem == Main.CAPS_STRAPPED : helmetItem == Main.CAPS;
 	}
 
 	private static void updateCapPressedAnimation(float delta) {

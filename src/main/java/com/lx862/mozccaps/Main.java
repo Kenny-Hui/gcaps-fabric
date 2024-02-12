@@ -12,10 +12,12 @@ import net.minecraft.util.Identifier;
 
 public class Main implements ModInitializer {
 	public static final Item CAPS = new ArmorItem(new CapArmorMaterial(), ArmorItem.Type.HELMET, new FabricItemSettings());
+	public static final Item CAPS_STRAPPED = new ArmorItem(new CapArmorMaterial(), ArmorItem.Type.HELMET, new FabricItemSettings());
 
 	@Override
 	public void onInitialize() {
 		Registry.register(Registries.ITEM, new Identifier("mozc_caps", "caps"), CAPS);
+		Registry.register(Registries.ITEM, new Identifier("mozc_caps", "caps_strapped"), CAPS_STRAPPED);
 		Networking.registerReceiverServer();
 	}
 }

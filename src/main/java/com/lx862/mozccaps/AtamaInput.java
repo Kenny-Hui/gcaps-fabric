@@ -7,8 +7,6 @@ public class AtamaInput {
     private static boolean inputEnabled = false;
     public static int currentLayout = 0;
     public static String inputted = "";
-    // TODO: Add chin strapped variants for CAPS LOCK!
-    public static boolean capsLock = false;
     public static final Language[] layouts = {
             new Language("English", new String[]{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "}),
             // Note: I have no idea about anything in Japanese
@@ -18,6 +16,7 @@ public class AtamaInput {
     public static String getSelection(float headYawAngle) {
         String[] chars = layouts[currentLayout].characters;
         int selectIndex = Math.round((wrapAngle(headYawAngle) / 360) * (chars.length - 1));
+        boolean capsLock = MainClient.capEquipped(true);
 
         if(capsLock) {
             return chars[selectIndex].toUpperCase();
