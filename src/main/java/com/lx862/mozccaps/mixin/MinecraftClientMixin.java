@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
-public class ClientPlayerInteractionManagerMixin {
+public class MinecraftClientMixin {
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     public void interactBlock(CallbackInfoReturnable<Boolean> cir) {
         if(MainClient.capEquipped() && AtamaInput.inputEnabled()) {

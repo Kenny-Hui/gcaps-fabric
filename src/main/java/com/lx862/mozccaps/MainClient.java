@@ -44,8 +44,7 @@ public class MainClient implements ClientModInitializer {
 	}
 
 	private void handleInput(MinecraftClient minecraft) {
-		if(minecraft.player == null) return;
-		if(!capEquipped()) return;
+		if(minecraft.player == null || !capEquipped()) return;
 
 		while(toggleInputKey.wasPressed()) {
 			AtamaInput.toggleInput();
@@ -53,19 +52,19 @@ public class MainClient implements ClientModInitializer {
 
 		if(AtamaInput.inputEnabled()) {
 			// LMB
-			while(minecraft.options.attackKey.wasPressed()) {
+			while(minecraft.options.attackKey.isPressed()) {
 				AtamaInput.input(minecraft.player.getHeadYaw());
 				minecraft.player.swingHand(minecraft.player.getActiveHand());
 				Networking.sendKeyPressedClient(minecraft.player);
 			}
 
 			// MMB
-			while(minecraft.options.pickItemKey.wasPressed()) {
+			while(minecraft.options.pickItemKey.isPressed()) {
 				AtamaInput.cycleLayout();
 			}
 
 			// RMB
-			while(minecraft.options.useKey.wasPressed()) {
+			while(minecraft.options.useKey.isPressed()) {
 				AtamaInput.sendMessage(minecraft);
 			}
 		}
