@@ -31,7 +31,7 @@ public class MainClient implements ClientModInitializer {
 
 		HudRenderCallback.EVENT.register(HudRenderer::draw);
 		ClientTickEvents.START_CLIENT_TICK.register(this::handleInput);
-		Networking.registerReceiverClient();
+		Networking.registerClient();
 
 		WorldRenderEvents.BEFORE_ENTITIES.register(context -> {
 			updateCapPressedAnimation(context.tickDelta());

@@ -14,7 +14,7 @@
     }
   },
   "result": {
-    "item": "mozc_caps:caps",
+    "id": "mozc_caps:caps",
     "count": 1
   }
 }

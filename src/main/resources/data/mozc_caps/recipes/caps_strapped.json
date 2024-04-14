@@ -14,7 +14,7 @@
     }
   },
   "result": {
-    "item": "mozc_caps:caps_strapped",
+    "id": "mozc_caps:caps_strapped",
     "count": 1
   }
 }

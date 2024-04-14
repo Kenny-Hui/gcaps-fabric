@@ -1,10 +1,10 @@
 package com.lx862.mozccaps.render;
 
 import com.lx862.mozccaps.AtamaInput;
-import com.lx862.mozccaps.Main;
 import com.lx862.mozccaps.MainClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
 public class HudRenderer {
@@ -43,10 +43,10 @@ public class HudRenderer {
     }
 
     private static void drawText(DrawContext drawContext, MinecraftClient minecraft, Text string, int x, int y, int color, boolean shadow) {
-        drawContext.drawText(minecraft.textRenderer, string, PADDING + x, y, color, shadow);
+        drawContext.drawTextWithShadow(minecraft.textRenderer, string, PADDING + x, y, color);
     }
 
     private static void drawTextRightAligned(DrawContext drawContext, MinecraftClient minecraft, Text string, int x, int y, int color, boolean shadow) {
-        drawText(drawContext, minecraft, string, minecraft.getWindow().getScaledWidth() - PADDING - PADDING - x - minecraft.textRenderer.getWidth(string), y, color, shadow);
+        drawContext.drawTextWithShadow(minecraft.textRenderer, string, minecraft.getWindow().getScaledWidth() - PADDING - PADDING - x - minecraft.textRenderer.getWidth(string), y, color);
     }
 }
