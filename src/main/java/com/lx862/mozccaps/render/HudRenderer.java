@@ -4,6 +4,7 @@ import com.lx862.mozccaps.AtamaInput;
 import com.lx862.mozccaps.MainClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
 
@@ -11,16 +12,16 @@ public class HudRenderer {
     public static final int PADDING = 4;
     public static final int TEXT_FIELD_HEIGHT = 12;
     public static String selectedChar = "";
-    public static void draw(DrawContext drawContext, float delta) {
+    public static void draw(DrawContext drawContext, RenderTickCounter delta) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
 
         if(MainClient.capEquipped() && AtamaInput.inputEnabled() && minecraft.player != null) {
             selectedChar = AtamaInput.getSelection(minecraft.player.getHeadYaw());
-            drawTextField(minecraft, drawContext, delta);
+            drawTextField(minecraft, drawContext);
         }
     }
 
-    private static void drawTextField(MinecraftClient minecraft, DrawContext drawContext, float delta) {
+    private static void drawTextField(MinecraftClient minecraft, DrawContext drawContext) {
         int width = minecraft.getWindow().getScaledWidth();
         int height = minecraft.getWindow().getScaledHeight();
         int textFieldY = height - 34;

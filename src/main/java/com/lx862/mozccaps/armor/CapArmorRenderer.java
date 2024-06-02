@@ -16,7 +16,7 @@ import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
 
 public class CapArmorRenderer implements ArmorRenderer {
-    private static final Identifier TEXTURE_ID = new Identifier("mozc_caps:textures/armor/mozc_caps.png");
+    private static final Identifier TEXTURE_ID = Identifier.of("mozc_caps:textures/armor/mozc_caps.png");
     private static final ModelPart capModel = CapModel.getMainModel();
     private static final ModelPart chinModel = ChinModel.getMainModel();
     private static final float CAP_TILT = -0.2F;

@@ -34,7 +34,7 @@ public class MainClient implements ClientModInitializer {
 		Networking.registerClient();
 
 		WorldRenderEvents.BEFORE_ENTITIES.register(context -> {
-			updateCapPressedAnimation(context.tickDelta());
+			updateCapPressedAnimation(context.tickCounter().getLastFrameDuration());
 		});
 
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(content -> {

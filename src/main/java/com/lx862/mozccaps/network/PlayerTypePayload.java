@@ -9,7 +9,7 @@ import net.minecraft.util.Uuids;
 import java.util.UUID;
 
 public record PlayerTypePayload(UUID player) implements CustomPayload {
-    public static final CustomPayload.Id<PlayerTypePayload> PACKET_ID = new CustomPayload.Id<>(new Identifier("mozc_caps", "player_typed"));
+    public static final CustomPayload.Id<PlayerTypePayload> PACKET_ID = new CustomPayload.Id<>(Identifier.of("mozc_caps", "player_typed"));
     public static final PacketCodec<RegistryByteBuf, PlayerTypePayload> PACKET_CODEC = Uuids.PACKET_CODEC.xmap(PlayerTypePayload::new, PlayerTypePayload::player).cast();
 
     @Override

@@ -16,9 +16,9 @@ public class Main implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		Registry.register(Registries.ARMOR_MATERIAL, new Identifier("mozc_caps", "armor_material"), CapModel.ARMOR_MATERIAL);
-		Registry.register(Registries.ITEM, new Identifier("mozc_caps", "caps"), CAPS);
-		Registry.register(Registries.ITEM, new Identifier("mozc_caps", "caps_strapped"), CAPS_STRAPPED);
+		Registry.register(Registries.ARMOR_MATERIAL, Identifier.of("mozc_caps", "armor_material"), CapModel.ARMOR_MATERIAL);
+		Registry.register(Registries.ITEM, Identifier.of("mozc_caps", "caps"), CAPS);
+		Registry.register(Registries.ITEM, Identifier.of("mozc_caps", "caps_strapped"), CAPS_STRAPPED);
 
 		Networking.registerServer();
 	}
