@@ -82,7 +82,7 @@ public class MainClient implements ClientModInitializer {
 	}
 
 	private static void updateCapPressedAnimation(float delta) {
-		for(Map.Entry<UUID, Double> entry : keyPressedList.entrySet()) {
+		for(Map.Entry<UUID, Double> entry : new HashMap<>(keyPressedList).entrySet()) {
 			double newProgress = entry.getValue() + (delta / 8);
 			if(newProgress >= 1) {
 				keyPressedList.remove(entry.getKey());
