@@ -1,26 +1,8 @@
 package com.lx862.mozccaps.armor;
 
-import com.lx862.mozccaps.Main;
 import net.minecraft.client.model.*;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Util;
-
-import java.util.EnumMap;
 
 public class CapModel {
-
-    public static ArmorMaterial ARMOR_MATERIAL = new ArmorMaterial(Util.make(new EnumMap(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BODY, 1);
-            }),
-            15,
-            SoundEvents.ITEM_ARMOR_EQUIP_LEATHER,
-            () -> Ingredient.ofItems(Main.CAPS),
-            null,
-            0,
-            0);
 
     /* Code generated from Blockbench */
     public static TexturedModelData getTexturedModelData() {

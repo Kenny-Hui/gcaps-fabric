@@ -16,7 +16,7 @@ public class Networking {
         PayloadTypeRegistry.playS2C().register(PlayerTypePayload.PACKET_ID, PlayerTypePayload.PACKET_CODEC);
 
         ClientPlayNetworking.registerGlobalReceiver(PlayerTypePayload.PACKET_ID, (payload, context) -> {
-            UUID playerTyped = payload.getPlayerUuid();
+            int playerTyped = payload.getEntityId();
             MainClient.keyPressedList.put(playerTyped, 0.0);
         });
     }
@@ -25,14 +25,14 @@ public class Networking {
         PayloadTypeRegistry.playC2S().register(PlayerTypePayload.PACKET_ID, PlayerTypePayload.PACKET_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(PlayerTypePayload.PACKET_ID, (payload, context) -> {
-            UUID playerUuid = payload.getPlayerUuid();
+            int playerId = payload.getEntityId();
 
             MinecraftServer server = context.player().getServer();
             if(server == null) return;
 
             // Rebroadcast key pressed event to all player
             server.getPlayerManager().getPlayerList().forEach(p -> {
-                ServerPlayNetworking.send(p, new PlayerTypePayload(playerUuid));
+                ServerPlayNetworking.send(p, new PlayerTypePayload(playerId));
             });
         });
     }
@@ -40,6 +40,6 @@ public class Networking {
     public static void sendKeyPressedClient(PlayerEntity player) {
         PacketByteBuf buf = PacketByteBufs.create();
         buf.writeUuid(player.getUuid());
-        ClientPlayNetworking.send(new PlayerTypePayload(player.getUuid()));
+        ClientPlayNetworking.send(new PlayerTypePayload(player.getId()));
     }
 }
