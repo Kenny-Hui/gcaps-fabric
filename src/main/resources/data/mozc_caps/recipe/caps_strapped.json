@@ -6,12 +6,8 @@
     "   "
   ],
   "key": {
-    "C": {
-      "item": "mozc_caps:caps"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "C":  "mozc_caps:caps",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "mozc_caps:caps_strapped",
