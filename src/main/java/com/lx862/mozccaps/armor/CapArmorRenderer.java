@@ -54,7 +54,11 @@ public class CapArmorRenderer implements ArmorRenderer {
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumerProvider, ItemStack itemStack, BipedEntityRenderState bipedEntityRenderState, EquipmentSlot equipmentSlot, int light, BipedEntityModel<BipedEntityRenderState> contextModel) {
         if(bipedEntityRenderState instanceof PlayerEntityRenderState) {
             VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntityCutout(TEXTURE_ID));
-            double animationProgress = MainClient.keyPressedList.getOrDefault(((PlayerEntityRenderState)bipedEntityRenderState).id, 0.0);
+
+            double animationProgress = 0;
+            if(bipedEntityRenderState instanceof  PlayerEntityRenderState) {
+                animationProgress = MainClient.keyPressedList.getOrDefault(((PlayerEntityRenderState)bipedEntityRenderState).name, 0.0);
+            }
             double pressedAmount = animationProgress > 0.5 ? (1 - animationProgress) : (animationProgress);
 
             renderCap(matrices, vertexConsumer, contextModel, pressedAmount, light);

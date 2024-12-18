@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainClient implements ClientModInitializer {
-	public static HashMap<Integer, Double> keyPressedList = new HashMap<>();
+	public static HashMap<String, Double> keyPressedList = new HashMap<>();
 	public static final KeyBinding toggleInputKey = KeyBindingHelper.registerKeyBinding(new KeyBinding("key.mozc_caps.toggle_input", GLFW.GLFW_KEY_Y, "category.mozc_caps.title"));
 
 	@Override
@@ -81,7 +81,7 @@ public class MainClient implements ClientModInitializer {
 	}
 
 	private static void updateCapPressedAnimation(float delta) {
-		for(Map.Entry<Integer, Double> entry : new HashMap<>(keyPressedList).entrySet()) {
+		for(Map.Entry<String, Double> entry : new HashMap<>(keyPressedList).entrySet()) {
 			double newProgress = entry.getValue() + (delta / 8);
 			if(newProgress >= 1) {
 				keyPressedList.remove(entry.getKey());
