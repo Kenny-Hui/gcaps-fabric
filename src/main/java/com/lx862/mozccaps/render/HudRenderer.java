@@ -9,17 +9,30 @@ import net.minecraft.text.Text;
 public class HudRenderer {
     public static final int PADDING = 4;
     public static final int TEXT_FIELD_HEIGHT = 12;
-    public static String selectedChar = "";
     public static void draw(DrawContext drawContext, RenderTickCounter delta) {
         MinecraftClient minecraft = MinecraftClient.getInstance();
 
-        if(MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled() && minecraft.player != null) {
-            selectedChar = MainClient.getAtamaInput().getSelection(minecraft.player.getHeadYaw());
-            drawTextField(minecraft, drawContext);
+        if(!minecraft.options.hudHidden && MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled() && minecraft.player != null) {
+            String selectedChar = MainClient.getAtamaInput().getSelection(minecraft.player.getHeadYaw());
+            drawSelectedChar(selectedChar, minecraft, drawContext);
+            drawTextField(selectedChar, minecraft, drawContext);
         }
     }
 
-    private static void drawTextField(MinecraftClient minecraft, DrawContext drawContext) {
+    private static void drawSelectedChar(String selectedChar, MinecraftClient minecraft, DrawContext drawContext) {
+        int textWidth = minecraft.textRenderer.getWidth(selectedChar);
+        double halfWidth = minecraft.getWindow().getScaledWidth() / 2.0;
+        double halfHeight = minecraft.getWindow().getScaledHeight() / 2.0;
+
+        drawContext.getMatrices().push();
+        drawContext.getMatrices().translate(halfWidth, halfHeight, 0);
+        drawContext.getMatrices().scale(2, 2, 2);
+        drawContext.getMatrices().translate(-textWidth, -minecraft.textRenderer.fontHeight / 2.0, 0);
+        drawText(drawContext, minecraft, Text.literal(selectedChar), 0, 0, 0xFFFFFFFF, true);
+        drawContext.getMatrices().pop();
+    }
+
+    private static void drawTextField(String selectedChar, MinecraftClient minecraft, DrawContext drawContext) {
         int width = minecraft.getWindow().getScaledWidth();
         int height = minecraft.getWindow().getScaledHeight();
         int textFieldY = height - 34;
