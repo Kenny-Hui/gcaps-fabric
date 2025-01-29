@@ -17,6 +17,7 @@ public class Main implements ModInitializer {
 	public static final RegistryKey<Item> CAPS_STRAPPED_KEY = RegistryKey.of(RegistryKeys.ITEM, Identifier.of("mozc_caps", "caps_strapped"));
 	public static final Item CAPS = Registry.register(Registries.ITEM, CAPS_KEY, new ArmorItem(ArmorMaterials.LEATHER, EquipmentType.HELMET, new Item.Settings().registryKey(CAPS_KEY).useItemPrefixedTranslationKey()));
 	public static final Item CAPS_STRAPPED = Registry.register(Registries.ITEM, CAPS_STRAPPED_KEY, new ArmorItem(ArmorMaterials.LEATHER, EquipmentType.HELMET, new Item.Settings().registryKey(CAPS_STRAPPED_KEY).useItemPrefixedTranslationKey()));
+
 	@Override
 	public void onInitialize() {
 		Networking.registerServer();

@@ -13,14 +13,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftClientMixin {
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     public void interactBlock(CallbackInfoReturnable<Boolean> cir) {
-        if(MainClient.capEquipped() && AtamaInput.inputEnabled()) {
+        if(MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled()) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(method = "handleBlockBreaking", at = @At("HEAD"), cancellable = true)
     public void breakBlock(boolean breaking, CallbackInfo ci) {
-        if(MainClient.capEquipped() && AtamaInput.inputEnabled()) {
+        if(MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled()) {
             ci.cancel();
         }
     }
