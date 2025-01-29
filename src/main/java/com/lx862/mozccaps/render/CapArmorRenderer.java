@@ -1,6 +1,7 @@
-package com.lx862.mozccaps.armor;
+package com.lx862.mozccaps.render;
 
-import com.lx862.mozccaps.MainClient;
+import com.lx862.mozccaps.armor.CapModel;
+import com.lx862.mozccaps.armor.ChinModel;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,11 +17,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.joml.Quaternionf;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CapArmorRenderer implements ArmorRenderer {
+    private static final HashMap<String, Double> typeAnimationMap = new HashMap<>();
     private static final Identifier TEXTURE_ID = Identifier.of("mozc_caps:textures/armor/mozc_caps.png");
     private static final ModelPart capModel = CapModel.getMainModel();
     private static final ModelPart chinModel = ChinModel.getMainModel();
     private static final float CAP_TILT = -0.2F;
+
     private final boolean hasStrap;
 
     public CapArmorRenderer(boolean hasStrap) {
@@ -56,7 +62,7 @@ public class CapArmorRenderer implements ArmorRenderer {
 
             double animationProgress = 0;
             if(bipedEntityRenderState instanceof  PlayerEntityRenderState) {
-                animationProgress = MainClient.keyPressedList.getOrDefault(((PlayerEntityRenderState)bipedEntityRenderState).name, 0.0);
+                animationProgress = getTypeAnimationProgress(((PlayerEntityRenderState)bipedEntityRenderState).name, 0.0);
             }
             double pressedAmount = animationProgress > 0.5 ? (1 - animationProgress) : (animationProgress);
 
@@ -66,5 +72,24 @@ public class CapArmorRenderer implements ArmorRenderer {
                 renderStrap(matrices, vertexConsumer, contextModel, light);
             }
         }
+    }
+
+    public static void updateCapPressedAnimation(float delta) {
+        for(Map.Entry<String, Double> entry : new HashMap<>(typeAnimationMap).entrySet()) {
+            double newProgress = entry.getValue() + (delta);
+            if(newProgress >= 1) {
+                typeAnimationMap.remove(entry.getKey());
+            } else {
+                typeAnimationMap.put(entry.getKey(), newProgress);
+            }
+        }
+    }
+
+    public static void startPlayerTypedAnimation(String playerName) {
+        typeAnimationMap.put(playerName, 0.0);
+    }
+
+    public static double getTypeAnimationProgress(String playerName, double defaultValue) {
+        return typeAnimationMap.getOrDefault(playerName, defaultValue);
     }
 }

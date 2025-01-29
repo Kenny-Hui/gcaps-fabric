@@ -1,6 +1,6 @@
 package com.lx862.mozccaps.network;
 
-import com.lx862.mozccaps.MainClient;
+import com.lx862.mozccaps.render.CapArmorRenderer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -15,7 +15,7 @@ public class Networking {
 
         ClientPlayNetworking.registerGlobalReceiver(PlayerTypePayload.PACKET_ID, (payload, context) -> {
             String playerTyped = payload.getPlayerName();
-            MainClient.keyPressedList.put(playerTyped, 0.0);
+            CapArmorRenderer.startPlayerTypedAnimation(playerTyped);
         });
     }
 
