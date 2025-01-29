@@ -3,6 +3,7 @@ package com.lx862.mozccaps.render;
 import com.lx862.mozccaps.MainClient;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.Text;
@@ -15,7 +16,7 @@ public class HudOverlayRenderer {
         MinecraftClient minecraft = MinecraftClient.getInstance();
         CapArmorRenderer.updateCapPressedAnimation(minecraft.getRenderTickCounter().getLastFrameDuration() / 4);
 
-        if(!minecraft.options.hudHidden && MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled() && minecraft.player != null) {
+        if(!minecraft.options.hudHidden && (!(minecraft.currentScreen instanceof ChatScreen)) && MainClient.capEquipped() && MainClient.getAtamaInput().inputEnabled() && minecraft.player != null) {
             String selectedChar = MainClient.getAtamaInput().getSelection(minecraft.player.getHeadYaw());
             drawSelectedChar(selectedChar, minecraft, drawContext);
             drawTextField(selectedChar, minecraft, drawContext);

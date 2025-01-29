@@ -40,6 +40,10 @@ public class AtamaInput {
         return this.inputted;
     }
 
+    public void setInputted(String str) {
+        this.inputted = str;
+    }
+
     public void cycleLayout() {
         currentLayout++;
         if(currentLayout > layouts.length - 1) {
