@@ -2,12 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "SCS",
-    "S S",
+    "SSS",
     "   "
   ],
   "key": {
-    "C":  "mozc_caps:caps",
-    "S": "minecraft:stick"
+    "C": {
+      "item": "mozc_caps:caps"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
   },
   "result": {
     "id": "mozc_caps:caps_strapped",

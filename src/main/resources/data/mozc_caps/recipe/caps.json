@@ -6,8 +6,12 @@
     "   "
   ],
   "key": {
-    "P": "minecraft:paper",
-    "R": "minecraft:redstone"
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
   },
   "result": {
     "id": "mozc_caps:caps",

@@ -8,9 +8,9 @@ import net.minecraft.util.Uuids;
 
 import java.util.UUID;
 
-public record PlayerTypePayload(UUID uuid) implements CustomPayload {
-    public static final CustomPayload.Id<PlayerTypePayload> PACKET_ID = new CustomPayload.Id<>(Identifier.of("mozc_caps", "player_typed"));
-    public static final PacketCodec<RegistryByteBuf, PlayerTypePayload> PACKET_CODEC = Uuids.PACKET_CODEC.xmap(PlayerTypePayload::new, PlayerTypePayload::uuid).cast();
+public record UpdatePlayerTypePayload(UUID uuid) implements CustomPayload {
+    public static final Id<UpdatePlayerTypePayload> PACKET_ID = new Id<>(Identifier.of("mozc_caps", "update_player_typed"));
+    public static final PacketCodec<RegistryByteBuf, UpdatePlayerTypePayload> PACKET_CODEC = Uuids.PACKET_CODEC.xmap(UpdatePlayerTypePayload::new, UpdatePlayerTypePayload::uuid).cast();
 
     @Override
     public Id<? extends CustomPayload> getId() {

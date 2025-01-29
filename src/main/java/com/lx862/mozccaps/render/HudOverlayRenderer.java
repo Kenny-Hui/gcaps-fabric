@@ -30,7 +30,7 @@ public class HudOverlayRenderer {
         double halfScreenWidth = minecraft.getWindow().getScaledWidth() / 2.0;
         double halfScreenHeight = minecraft.getWindow().getScaledHeight() / 2.0;
 
-        float typeAnimation = (float) CapArmorRenderer.getTypeAnimationProgress(minecraft.player.getGameProfile().getName(), 1.0);
+        float typeAnimation = (float) CapArmorRenderer.getTypeAnimationProgress(minecraft.player.getUuid(), 1.0);
         float textScale = 1.5f + (typeAnimation * 0.5f);
 
         matrices.push();
