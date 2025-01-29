@@ -11,9 +11,7 @@ import net.minecraft.server.MinecraftServer;
 
 public class Networking {
     public static void registerClient() {
-        PayloadTypeRegistry.playS2C().register(PlayerTypePayload.PACKET_ID, PlayerTypePayload.PACKET_CODEC);
-
-        ClientPlayNetworking.registerGlobalReceiver(PlayerTypePayload.PACKET_ID, (payload, context) -> {
+        ClientPlayNetworking.registerGlobalReceiver(UpdatePlayerTypePayload.PACKET_ID, (payload, context) -> {
             String playerTyped = payload.getPlayerName();
             CapArmorRenderer.startPlayerTypedAnimation(playerTyped);
         });
@@ -21,6 +19,7 @@ public class Networking {
 
     public static void registerServer() {
         PayloadTypeRegistry.playC2S().register(PlayerTypePayload.PACKET_ID, PlayerTypePayload.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(UpdatePlayerTypePayload.PACKET_ID, UpdatePlayerTypePayload.PACKET_CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(PlayerTypePayload.PACKET_ID, (payload, context) -> {
             String playerId = payload.getPlayerName();
@@ -30,7 +29,7 @@ public class Networking {
 
             // Rebroadcast key pressed event to all player
             server.getPlayerManager().getPlayerList().forEach(p -> {
-                ServerPlayNetworking.send(p, new PlayerTypePayload(playerId));
+                ServerPlayNetworking.send(p, new UpdatePlayerTypePayload(playerId));
             });
         });
     }

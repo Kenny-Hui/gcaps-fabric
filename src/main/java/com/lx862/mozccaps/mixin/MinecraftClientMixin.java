@@ -3,7 +3,6 @@ package com.lx862.mozccaps.mixin;
 import com.lx862.mozccaps.MainClient;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
@@ -12,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
-    @Shadow protected abstract void openChatScreen(String text);
 
     @Inject(method = "doAttack", at = @At("HEAD"), cancellable = true)
     public void interactBlock(CallbackInfoReturnable<Boolean> cir) {

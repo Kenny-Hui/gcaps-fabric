@@ -8,7 +8,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
@@ -28,10 +27,6 @@ public class MainClient implements ClientModInitializer {
 		HudRenderCallback.EVENT.register(HudOverlayRenderer::draw);
 		ClientTickEvents.START_CLIENT_TICK.register(this::handleInput);
 		Networking.registerClient();
-
-		WorldRenderEvents.BEFORE_ENTITIES.register(context -> {
-
-		});
 
 		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(content -> {
 			content.add(Main.CAPS);
